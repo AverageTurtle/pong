@@ -104,8 +104,8 @@ case vk: {\
 					switch (vk_code) {
 						proccess_button(BUTTON_UP, VK_UP);
 						proccess_button(BUTTON_DOWN, VK_DOWN);
-						proccess_button(BUTTON_LEFT, VK_LEFT);
-						proccess_button(BUTTON_RIGHT, VK_RIGHT);
+						proccess_button(BUTTON_W, 'W');
+						proccess_button(BUTTON_S, 'S');
 					}
 				}break;
 				default: {
