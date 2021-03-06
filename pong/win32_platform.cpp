@@ -52,6 +52,9 @@ LRESULT CALLBACK window_callback(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lPa
 
 int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nCmdShow)
 {
+
+	ShowCursor(FALSE);
+
 	//Create Window Class
 	WNDCLASS window_class = {};
 	window_class.style = CS_HREDRAW | CS_VREDRAW;
@@ -63,6 +66,13 @@ int WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR pCmdLine, int nC
 
 	//Create Window
 	HWND window = CreateWindow(window_class.lpszClassName, L"Pong Game", WS_OVERLAPPEDWINDOW | WS_VISIBLE, CW_USEDEFAULT, CW_USEDEFAULT, 1280, 720, 0, 0, hInstance, 0);
+	{
+		//Fullscreen
+		SetWindowLong(window, GWL_STYLE, GetWindowLong(window, GWL_STYLE) & ~WS_OVERLAPPEDWINDOW);
+		MONITORINFO mi = { sizeof(mi) };
+		GetMonitorInfo(MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY), &mi);
+		SetWindowPos(window, HWND_TOP, mi.rcMonitor.left, mi.rcMonitor.top, mi.rcMonitor.right - mi.rcMonitor.left, mi.rcMonitor.bottom - mi.rcMonitor.top, SWP_NOOWNERZORDER | SWP_FRAMECHANGED);
+	}
 	HDC hdc = GetDC(window);
 
 	Input input = {};
@@ -104,8 +114,11 @@ case vk: {\
 					switch (vk_code) {
 						proccess_button(BUTTON_UP, VK_UP);
 						proccess_button(BUTTON_DOWN, VK_DOWN);
+						proccess_button(BUTTON_LEFT, VK_LEFT);
+						proccess_button(BUTTON_RIGHT, VK_RIGHT);
 						proccess_button(BUTTON_W, 'W');
 						proccess_button(BUTTON_S, 'S');
+						proccess_button(BUTTON_ENTER, VK_RETURN)
 					}
 				}break;
 				default: {
